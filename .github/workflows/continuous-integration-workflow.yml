@@ -13,28 +13,4 @@ jobs:
           dotnet-version: 3.1.x
 
       - name: Dotnet build
-        run: dotnet build DigitalLearningSolutions.sln
-
-      - name: Dotnet test
-        run: dotnet test DigitalLearningSolutions.Web.Tests
-
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-
-      - name: Typescript install
-        run: yarn install --frozen-lockfile
-        working-directory: ./DigitalLearningSolutions.Web
-
-      - name: Typescript build
-        run: yarn build:webpack
-        working-directory: ./DigitalLearningSolutions.Web
-
-      - name: Typescript test
-        run: yarn test
-        working-directory: ./DigitalLearningSolutions.Web
-
-      - name: Typescript lint
-        run: yarn lint
-        working-directory: ./DigitalLearningSolutions.Web
+        run: dotnet build GDSMultiPageFormService.sln
