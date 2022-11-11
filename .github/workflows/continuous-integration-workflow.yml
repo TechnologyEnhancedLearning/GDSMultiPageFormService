@@ -1,0 +1,40 @@
+name: Continuous Integration
+on: [push]
+jobs:
+  build:
+    name: Build and test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core SDK 3.1
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.x
+
+      - name: Dotnet build
+        run: dotnet build DigitalLearningSolutions.sln
+
+      - name: Dotnet test
+        run: dotnet test DigitalLearningSolutions.Web.Tests
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Typescript install
+        run: yarn install --frozen-lockfile
+        working-directory: ./DigitalLearningSolutions.Web
+
+      - name: Typescript build
+        run: yarn build:webpack
+        working-directory: ./DigitalLearningSolutions.Web
+
+      - name: Typescript test
+        run: yarn test
+        working-directory: ./DigitalLearningSolutions.Web
+
+      - name: Typescript lint
+        run: yarn lint
+        working-directory: ./DigitalLearningSolutions.Web
