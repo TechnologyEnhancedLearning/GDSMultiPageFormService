@@ -2,15 +2,47 @@ name: Continuous Integration
 on: [push]
 jobs:
   build:
-    name: Build and test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+      env:
+        BUILD_CONFIG: 'Release'
+        SOLUTION: 'GDSMultiPageFormService.sln'
+      name: Build and publish package
+      runs-on: ubuntu-latest
+      strategy: 
+          matrix:
+           dotnet-version: ['3.1.x']
+      steps:
+        - uses: actions/checkout@v2
+          with:
+           fetch-depth: 0
 
-      - name: Setup .NET Core SDK 60
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 6.0.x
+        - name: Setup .NET Core SDK 60
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: ${{ matrix.dotnet-version }}
 
-      - name: Dotnet build
-        run: dotnet build GDSMultiPageFormService.sln
+        - name: Install GitVersion
+          uses: gittools/actions/gitversion/setup@v0.9.7
+          with:
+            versionSpec: '5.5.0'
+            
+        - name: Determine Version
+          id:   gitversion
+          uses: gittools/actions/gitversion/execute@v0.9.7
+
+        - name: Display GitVersion outputs
+          run: |
+            echo "Major: ${{ steps.gitversion.outputs.major }}"
+            echo "Minor: ${{ steps.gitversion.outputs.minor }}"
+            echo "Patch: ${{ steps.gitversion.outputs.patch }}"
+            echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+
+        - name: Dotnet build
+          run:  dotnet build GDSMultiPageFormService.sln --configuration release
+
+        - name: Package nuget        
+          if: startsWith(github.ref, 'refs/tags/v')
+          run: dotnet pack GDSMultiPageFormService.sln --configuration release -o:package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2  }}
+
+        - name: Push generated package to GitHub registry
+          if: startsWith(github.ref, 'refs/tags/v')
+          run: dotnet nuget push ./package/*.nupkg  --source https://nuget.pkg.github.com/TechnologyEnhancedLearning/index.json   --api-key ${{ secrets.NUGETAPIKEY }}
