@@ -136,7 +136,7 @@ The GET method for the summary page, should:
 2. Populate the view model with user's selections from the data
 3. Return the view
 
-The view should show all of the selections made by the user with “Change” links allowing the user to return to any step in the transaction. See NHS Design System prototype example.
+The view should show all of the selections made by the user with “Change” links allowing the user to return to any step in the transaction. See [NHS Design System prototype example](https://nhsuk-prototype-kit.azurewebsites.net/templates/check-your-answers).
 
 #### For example:
 ```
