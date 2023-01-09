@@ -4,12 +4,13 @@ jobs:
   build:
       env:
         BUILD_CONFIG: 'Release'
+        DOTNET_ROLL_FORWARD: 'Major'
         SOLUTION: 'GDSMultiPageFormService.sln'
       name: Build and publish package
       runs-on: ubuntu-latest
       strategy: 
           matrix:
-           dotnet-version: ['3.1.x']
+           dotnet-version: ['6.0.x']
       steps:
         - uses: actions/checkout@v2
           with:
