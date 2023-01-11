@@ -4,12 +4,13 @@ jobs:
   build:
       env:
         BUILD_CONFIG: 'Release'
+        DOTNET_ROLL_FORWARD: 'Major'
         SOLUTION: 'GDSMultiPageFormService.sln'
       name: Build and publish package
       runs-on: ubuntu-latest
       strategy: 
           matrix:
-           dotnet-version: ['3.1.x']
+           dotnet-version: ['6.0.x']
       steps:
         - uses: actions/checkout@v2
           with:
@@ -35,6 +36,9 @@ jobs:
             echo "Minor: ${{ steps.gitversion.outputs.minor }}"
             echo "Patch: ${{ steps.gitversion.outputs.patch }}"
             echo "NuGetVersionV2: ${{ steps.gitversion.outputs.nuGetVersionV2 }}"
+            
+        - name: Add Azure artifact
+          run: dotnet nuget add source 'https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json' --name 'LearningHubFeed'  --username 'kevin.whittaker' --password ${{ secrets.AZUREDEVOPSKEY }} --store-password-in-clear-text
 
         - name: Dotnet build
           run:  dotnet build GDSMultiPageFormService.sln --configuration release
