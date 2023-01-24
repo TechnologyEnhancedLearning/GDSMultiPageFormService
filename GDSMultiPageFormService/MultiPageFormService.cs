@@ -12,16 +12,16 @@
 
     public interface IMultiPageFormService
     {
-        void SetMultiPageFormData(object formData, MultiPageFormDataFeature feature, ITempDataDictionary tempData);
+        Task SetMultiPageFormData(object formData, MultiPageFormDataFeature feature, ITempDataDictionary tempData);
 
 
-        T GetMultiPageFormData<T>(MultiPageFormDataFeature feature, ITempDataDictionary tempData);
+        Task<T> GetMultiPageFormData<T>(MultiPageFormDataFeature feature, ITempDataDictionary tempData);
 
 
-        void ClearMultiPageFormData(MultiPageFormDataFeature feature, ITempDataDictionary tempData);
+        Task ClearMultiPageFormData(MultiPageFormDataFeature feature, ITempDataDictionary tempData);
 
 
-        bool FormDataExistsForGuidAndFeature(MultiPageFormDataFeature feature, Guid tempDataGuid);
+        Task<bool> FormDataExistsForGuidAndFeature(MultiPageFormDataFeature feature, Guid tempDataGuid);
 
     }
 
@@ -70,7 +70,7 @@
             }
         }
 
-        public async void SetMultiPageFormData(object formData, MultiPageFormDataFeature feature, ITempDataDictionary tempData)
+        public async Task SetMultiPageFormData(object formData, MultiPageFormDataFeature feature, ITempDataDictionary tempData)
         {
             var json = JsonConvert.SerializeObject(formData);
             if (useRedisCache)
@@ -121,7 +121,7 @@
             }
         }
 
-        public T GetMultiPageFormData<T>(MultiPageFormDataFeature feature, ITempDataDictionary tempData)
+        public async Task<T> GetMultiPageFormData<T>(MultiPageFormDataFeature feature, ITempDataDictionary tempData)
         {
             if (tempData[feature.TempDataKey] == null)
             {
@@ -132,7 +132,7 @@
             if (useRedisCache)
             {
                 string MultiPageFormCacheKey = GetMultiPageFormCacheKey(tempDataGuid, feature.Name);
-                var existingMultiPageFormData = this.cacheService.GetAsync<MultiPageFormData>(MultiPageFormCacheKey).Result;
+                var existingMultiPageFormData = await this.cacheService.GetAsync<MultiPageFormData>(MultiPageFormCacheKey);
 
                 if (existingMultiPageFormData == null)
                 {
@@ -164,7 +164,7 @@
 
         }
 
-        public void ClearMultiPageFormData(MultiPageFormDataFeature feature, ITempDataDictionary tempData)
+        public async Task ClearMultiPageFormData(MultiPageFormDataFeature feature, ITempDataDictionary tempData)
         {
             if (tempData[feature.TempDataKey] == null)
             {
@@ -174,7 +174,8 @@
             if (useRedisCache)
             {
                 string MultiPageFormCacheKey = GetMultiPageFormCacheKey(tempDataGuid, feature.Name);
-                this.cacheService.RemoveAsync(MultiPageFormCacheKey);
+                await this.cacheService.RemoveAsync(MultiPageFormCacheKey);
+                tempData.Remove(feature.TempDataKey);
             }
             else if (_DbConnection != null)
             {
@@ -188,14 +189,14 @@
             }
         }
 
-        public bool FormDataExistsForGuidAndFeature(MultiPageFormDataFeature feature, Guid tempDataGuid)
+        public async Task<bool> FormDataExistsForGuidAndFeature(MultiPageFormDataFeature feature, Guid tempDataGuid)
         {
             try
             {
                 if (useRedisCache)
                 {
                     string MultiPageFormCacheKey = GetMultiPageFormCacheKey(tempDataGuid, feature.Name);
-                    var existingMultiPageFormData = this.cacheService.GetAsync<MultiPageFormData>(MultiPageFormCacheKey).Result;
+                    var existingMultiPageFormData =await this.cacheService.GetAsync<MultiPageFormData>(MultiPageFormCacheKey);
                     return existingMultiPageFormData != null;
                 }
                 else if (_DbConnection != null)
