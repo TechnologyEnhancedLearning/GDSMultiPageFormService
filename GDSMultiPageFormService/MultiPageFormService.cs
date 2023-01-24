@@ -196,7 +196,7 @@
                 if (useRedisCache)
                 {
                     string MultiPageFormCacheKey = GetMultiPageFormCacheKey(tempDataGuid, feature.Name);
-                    var existingMultiPageFormData =await this.cacheService.GetAsync<MultiPageFormData>(MultiPageFormCacheKey);
+                    var existingMultiPageFormData = await this.cacheService.GetAsync<MultiPageFormData>(MultiPageFormCacheKey);
                     return existingMultiPageFormData != null;
                 }
                 else if (_DbConnection != null)
