@@ -51,4 +51,4 @@ jobs:
           run: dotnet nuget push ./package/*.nupkg  --source https://nuget.pkg.github.com/TechnologyEnhancedLearning/index.json   --api-key ${{ secrets.NUGETAPIKEY }}
           
         - name: Push generated package to Azure feed
-          run: dotnet nuget push --api-key LearningHubFeed ${{ secrets.NUGETAPIKEY }} ./package/*.nupkg
+          run: dotnet nuget push ./package/*.nupkg  --source https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json   --api-key ${{ secrets.AZUREDEVOPSKEY }}
