@@ -50,3 +50,7 @@ jobs:
         - name: Push generated package to GitHub registry
           if: startsWith(github.ref, 'refs/tags/v')
           run: dotnet nuget push ./package/*.nupkg  --source https://nuget.pkg.github.com/TechnologyEnhancedLearning/index.json   --api-key ${{ secrets.NUGETAPIKEY }}
+          
+        - name: Push generated package to Azure feed
+          if: startsWith(github.ref, 'refs/tags/v')
+          run: dotnet nuget push ./package/*.nupkg -src LearningHubFeed -ApiKey ${{ secrets.AZUREDEVOPSKEY }}
