@@ -218,7 +218,7 @@
             }
             finally
             {
-                if (_DbConnection.State == ConnectionState.Open)
+                if (_DbConnection != null && _DbConnection.State == ConnectionState.Open)
                 {
                     _DbConnection.Close();
                 }
