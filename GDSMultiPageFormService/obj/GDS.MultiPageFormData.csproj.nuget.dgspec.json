@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Oluwatobi.awe\\source\\repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj": {}
+    "C:\\Users\\Oluwatobi.awe\\Source\\Repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Oluwatobi.awe\\source\\repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj": {
+    "C:\\Users\\Oluwatobi.awe\\Source\\Repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Oluwatobi.awe\\source\\repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj",
+        "projectUniqueName": "C:\\Users\\Oluwatobi.awe\\Source\\Repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj",
         "projectName": "GDS.MultiPageFormData",
-        "projectPath": "C:\\Users\\Oluwatobi.awe\\source\\repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj",
+        "projectPath": "C:\\Users\\Oluwatobi.awe\\Source\\Repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\GDS.MultiPageFormData.csproj",
         "packagesPath": "C:\\Users\\Oluwatobi.awe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Oluwatobi.awe\\source\\repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\obj\\",
+        "outputPath": "C:\\Users\\Oluwatobi.awe\\Source\\Repos\\GDSMultiPageFormService\\GDSMultiPageFormService\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Oluwatobi.awe\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -47,6 +47,10 @@
               "target": "Package",
               "version": "[2.0.123, )"
             },
+            "LearningHub.Nhs.Caching": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "Microsoft.FeatureManagement.AspNetCore": {
               "target": "Package",
               "version": "[2.5.1, )"
@@ -72,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.405\\RuntimeIdentifierGraph.json"
         }
       }
     }

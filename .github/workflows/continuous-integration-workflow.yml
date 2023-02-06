@@ -44,9 +44,12 @@ jobs:
           run:  dotnet build GDSMultiPageFormService.sln --configuration release
 
         - name: Package nuget        
-          if: startsWith(github.ref, 'refs/tags/v')
           run: dotnet pack GDSMultiPageFormService.sln --configuration release -o:package /p:PackageVersion=${{ steps.gitversion.outputs.nuGetVersionV2  }}
 
         - name: Push generated package to GitHub registry
           if: startsWith(github.ref, 'refs/tags/v')
           run: dotnet nuget push ./package/*.nupkg  --source https://nuget.pkg.github.com/TechnologyEnhancedLearning/index.json   --api-key ${{ secrets.NUGETAPIKEY }}
+          
+        - name: Push generated package to Azure feed
+          if: startsWith(github.ref, 'refs/tags/v')
+          run: dotnet nuget push ./package/*.nupkg  --source https://pkgs.dev.azure.com/e-LfH/_packaging/LearningHubFeed/nuget/v3/index.json   --api-key ${{ secrets.AZUREDEVOPSKEY }}
