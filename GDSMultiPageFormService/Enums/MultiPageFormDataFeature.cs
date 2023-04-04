@@ -92,6 +92,12 @@ namespace GDS.MultiPageFormData.Enums
             nameof(EnrolDelegateInActivity),
             "EnrolDelegateInActivity"
         );
+        
+        public static readonly MultiPageFormDataFeature AddUserFeedback = new MultiPageFormDataFeature(
+            15,
+            nameof(AddUserFeedback),
+            "AddUserFeedback"
+        );
 
         public readonly string TempDataKey;
 
