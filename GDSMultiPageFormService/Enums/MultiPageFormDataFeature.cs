@@ -1,5 +1,4 @@
-﻿using System;
-namespace GDS.MultiPageFormData.Enums
+﻿namespace GDS.MultiPageFormData.Enums
 {
     public class MultiPageFormDataFeature : Enumeration
     {
@@ -92,12 +91,18 @@ namespace GDS.MultiPageFormData.Enums
             nameof(EnrolDelegateInActivity),
             "EnrolDelegateInActivity"
         );
-        
-        public static readonly MultiPageFormDataFeature AddUserFeedback = new MultiPageFormDataFeature(
+
+        public static MultiPageFormDataFeature AddUserFeedback = new MultiPageFormDataFeature(
             15,
             nameof(AddUserFeedback),
             "AddUserFeedback"
         );
+
+        public static MultiPageFormDataFeature CustomWebForm = new MultiPageFormDataFeature(
+           16,
+           nameof(CustomWebForm),
+           "CustomWebForm"
+       );
 
         public readonly string TempDataKey;
 
@@ -106,10 +111,26 @@ namespace GDS.MultiPageFormData.Enums
             TempDataKey = tempDataKey;
         }
 
+
+        public static MultiPageFormDataFeature AddCustomWebForm(string name)
+        {
+            if (!name.EndsWith("CWF"))
+            {
+                throw new InvalidOperationException($"A custom web form name must end with CWF");
+            }
+            CustomWebForm = new MultiPageFormDataFeature(name.GetHashCode(), name.Trim(), $"{name.Trim()}Guid");
+            return CustomWebForm;
+        }
+
         public static implicit operator MultiPageFormDataFeature(string value)
         {
             try
             {
+                if (value.EndsWith("CWF"))
+                {
+                    AddCustomWebForm(value);
+                }
+
                 return FromName<MultiPageFormDataFeature>(value);
             }
             catch (InvalidOperationException e)
