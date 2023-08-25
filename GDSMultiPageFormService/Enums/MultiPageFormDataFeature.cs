@@ -92,7 +92,7 @@
             "EnrolDelegateInActivity"
         );
 
-        public static MultiPageFormDataFeature AddUserFeedback = new MultiPageFormDataFeature(
+        public static readonly MultiPageFormDataFeature AddUserFeedback = new MultiPageFormDataFeature(
             15,
             nameof(AddUserFeedback),
             "AddUserFeedback"
