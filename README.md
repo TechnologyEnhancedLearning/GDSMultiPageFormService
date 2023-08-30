@@ -194,10 +194,10 @@ The POST method for the summary page, triggered by submitting, should:
             return RedirectToAction("Confirmation");
         }
 ```
-### Use of personalized feature names
+### Use of generic feature names
 The preceding code samples all rely on predefined names like MultiPageFormDataFeature.AddNewCourse and MultiPageFormDataFeature.AddRegistrationPrompt. In scenarios demanding the use of names not available within the MultiPageFormDataFeature class, we have the option to employ a function instead of the pre-existing names.
 
-We can utilize MultiPageFormDataFeature.AddCustomWebForm("NewCourseCWF") in place of MultiPageFormDataFeature.AddNewCourse. However, It's important to note that any custom feature name must end with CWF; failure to do so will result in an exception being thrown.
+We can utilise MultiPageFormDataFeature.AddCustomWebForm("NewCourseCWF") in place of MultiPageFormDataFeature.AddNewCourse. However, It's important to note that any custom feature name must end with `CWF`; failure to do so will result in an exception being thrown.
 
 #### For example
 ```
