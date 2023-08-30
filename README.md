@@ -194,3 +194,29 @@ The POST method for the summary page, triggered by submitting, should:
             return RedirectToAction("Confirmation");
         }
 ```
+### Use of generic feature names
+The preceding code samples all rely on predefined names like MultiPageFormDataFeature.AddNewCourse and MultiPageFormDataFeature.AddRegistrationPrompt. In scenarios demanding the use of names not available within the MultiPageFormDataFeature class, we have the option to employ a function instead of the pre-existing names.
+
+We can utilise MultiPageFormDataFeature.AddCustomWebForm("NewCourseCWF") in place of MultiPageFormDataFeature.AddNewCourse. However, It's important to note that any custom feature name must end with `CWF`; failure to do so will result in an exception being thrown.
+
+#### For example
+```
+
+//1. Invoke the multi-page form service, passing it the model for the data being captured:
+    multiPageFormService.SetMultiPageFormData(
+        new AddNewCentreCourseTempData(),
+        MultiPageFormDataFeature.AddCustomWebForm("NewCourseCWF"),
+        TempData
+    );
+
+
+//2. Use the multipage form service to retrieve transactional data:
+            var data = multiPageFormService.GetMultiPageFormData<AddNewCentreCourseTempData>(
+                MultiPageFormDataFeature.AddCustomWebForm("NewCourseCWF"),
+                TempData
+            );
+
+//3. Use the multipage form service to remove the transactional data:
+            multiPageFormService.ClearMultiPageFormData(MultiPageFormDataFeature.AddCustomWebForm("NewCourseCWF"), TempData);
+
+```
